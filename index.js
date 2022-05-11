@@ -25,7 +25,7 @@ const getPokemon = async () => {
         // generando un nuevo arreglo con la data a entregar en el siguiente requerimiento.
         Promise.all(promesas).then((resultados) => {
             resultados.forEach((pokemonesEnlistados) => {
-                arrayPokemon.push({ 'img': pokemonesEnlistados.data.sprites.front_default, 'nombre': pokemonesEnlistados.data.name })
+                arrayPokemon.push({ img: pokemonesEnlistados.data.sprites.front_default, nombre: pokemonesEnlistados.data.name })
             })
             resolve(arrayPokemon)
         })
@@ -43,8 +43,8 @@ http.createServer((req, res) => {
     //nombre y la url de una imagen de 150 pokemones
     if (req.url == '/pokemones') {
         res.writeHead(200, { 'Content-Type': 'json' })
-        getPokemon().then((arrayP) => {
-            res.write(JSON.stringify(arrayP))
+        getPokemon().then((arrayPokemon) => {
+            res.write(JSON.stringify(arrayPokemon))
             res.end()
         })
     }
