@@ -8,6 +8,7 @@ const getDetallesPokemon = async (urlPokemon) => {
     return data
 }
 
+// Hacer uso de Async/Await para las funciones que consulten los endpoints de la pokeapi.
 const getPokemon = async () => {
     return new Promise(async (resolve, reject) => {
         const { data } = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=150&offset=0')
@@ -19,6 +20,9 @@ const getPokemon = async () => {
         })
 
         const arrayPokemon = []
+
+        // Usar el Promise.all() para ejecutar y obtener la data de las funciones asíncronas
+        // generando un nuevo arreglo con la data a entregar en el siguiente requerimiento.
         Promise.all(promesas).then((resultados) => {
             resultados.forEach((pokemonesEnlistados) => {
                 arrayPokemon.push({ 'img': pokemonesEnlistados.data.sprites.front_default, 'nombre': pokemonesEnlistados.data.name })
@@ -35,8 +39,10 @@ http.createServer((req, res) => {
             res.end(html)
         })
     }
+    // Disponibilizar la ruta http://localhost:3000/pokemones que devuelva un JSON con el
+    //nombre y la url de una imagen de 150 pokemones
     if (req.url == '/pokemones') {
-        res.writeHead(200, { 'Content-Type': 'text/css' })
+        res.writeHead(200, { 'Content-Type': 'json' })
         getPokemon().then((arrayP) => {
             res.write(JSON.stringify(arrayP))
             res.end()
