@@ -42,7 +42,7 @@ http.createServer((req, res) => {
     // Disponibilizar la ruta http://localhost:3000/pokemones que devuelva un JSON con el
     //nombre y la url de una imagen de 150 pokemones
     if (req.url == '/pokemones') {
-        res.writeHead(200, { 'Content-Type': 'json' })
+        res.writeHead(200, { 'Content-Type': 'application/json' })
         getPokemon().then((arrayPokemon) => {
             res.write(JSON.stringify(arrayPokemon))
             res.end()
